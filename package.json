@@ -1,0 +1,19 @@
+{
+  "name": "minesweeper",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node_modules/.bin/serve"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "angular": "^1.5.7",
+    "bootstrap": "^3.3.6",
+    "lodash": "^4.13.1"
+  },
+  "devDependencies": {
+    "serve": "^1.4.0"
+  }
+}
