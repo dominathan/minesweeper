@@ -3,26 +3,20 @@ angular
   .directive('squareDirective', function(MinesweeperService) {
     return {
       restrict: 'E',
-      template: `<span class='square hidden'>{{ mine.mine ? 'X' : 'O' }}</span>`,
+      template: `<span class='square'>{{mine.mineCount}}</span>`,
       scope: {
-        mine: '=square'
+        mine: '=square',
+        grid: '=grid'
       },
+      transclude: true,
       link: function(scope,element,attrs) {
         element.css({
          border: '1px solid red',
          backgroundColor: 'lightgrey',
          cursor: 'finger',
-         width: '20px',
-         height: '20px',
+         width: '25px',
+         height: '25px',
          display: 'inline-block'
-        })
-        element.on('mousedown', function(event) {
-          event.preventDefault();
-          if(scope.mine.mine) {
-            console.error("CLICKED A MINE", scope.mine);
-          } else {
-            console.log("No mine", scope.mine);
-          }
         })
       }
     }

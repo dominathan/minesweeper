@@ -2,10 +2,6 @@
   display: inline-block;
 }
 
-.row {
-  margin-bottom: -10px;
-}
-
 .hidden {
   visibility:hidden; !important
 }

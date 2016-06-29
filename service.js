@@ -1,6 +1,6 @@
 angular
   .module("minesweeper")
-  .factory('MinesweeperService',function() {
+  .factory('MinesweeperService',function($rootScope) {
     return {
       initGrid: initGrid,
       checkMineCount: checkMineCount
@@ -12,7 +12,6 @@ angular
       var height = opts.height || 24;
       var grid = [];
       var row;
-
       var listOfShuffledMines = shuffle(createSquares(mines,width,height));
 
       for(var i = 0; i < height; i++) {
@@ -29,15 +28,20 @@ angular
     }
 
     function checkMineCount(square,grid) {
+      if(square.mineCount > 0) {
+        return square.mineCount;
+      }
+      square.mineCount = 0;
       var columnLocation = square.col;
       var rowLocation = square.row;
       for(var i = columnLocation - 1; i <= columnLocation + 1; i++) {
         for(var j = rowLocation - 1; j <= rowLocation + 1; j++) {
-          if(grid[i] && grid[i][j] && grid[i][j].mine) {
+          if(grid[j] && grid[j][i] && grid[j][i].mine) {
             square.mineCount += 1;
           }
         }
       }
+      return square.mineCount;
     }
 
     function shuffle(a) {
@@ -53,7 +57,7 @@ angular
 
     function Square(mine) {
       this.hidden = true
-      this.mineCount = 0;
+      this.mineCount = null;
       this.mine = mine;
     }
 
