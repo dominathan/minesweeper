@@ -3,7 +3,7 @@ angular
   .directive('squareDirective', function(MinesweeperService) {
     return {
       restrict: 'E',
-      template: `<span class='square'>{{mine.mineCount}}</span>`,
+      template: `<span class='square'>{{mine.mine ? ' ' : mine.mineCount}}</span>`,
       scope: {
         mine: '=square',
         grid: '=grid'
@@ -17,6 +17,16 @@ angular
          width: '25px',
          height: '25px',
          display: 'inline-block'
+        })
+
+        element.on('click', function(event) {
+          event.preventDefault();
+          if(scope.mine.mine) {
+            console.error("YOU LOSE");
+            element.css({
+              backgroundColor: 'red'
+            });
+          }
         })
       }
     }

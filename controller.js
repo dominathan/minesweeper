@@ -7,6 +7,9 @@ angular
       var neighbors = squareNeighbors(square,$scope.grid);
       recursiveCheck(square,$scope.grid,neighbors)
     }
+    $scope.toggleFlag = function(square) {
+      console.log("FLAG")
+    }
 
     function recursiveCheck(square,grid) {
       var count = MinesweeperService.checkMineCount(square,grid)
