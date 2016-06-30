@@ -5,3 +5,13 @@
 .hidden {
   visibility:hidden; !important
 }
+
+.flag {
+  background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Minesweeper_flag.svg/2000px-Minesweeper_flag.svg.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 20px;
+  width: 20px;
+  z-index: 100;
+  position: relative;
+}

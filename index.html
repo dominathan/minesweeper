@@ -11,8 +11,8 @@
     <div class="container">
       <div ng-controller="MinesweeperCtrl" class="">
         <div ng-repeat='row in grid' class="row">
-          <div ng-repeat='col in row' class="square">
-            <square-directive ng-click="toggleSquare(col)" ng-right-click="toggleFlag()" square="col" grid="grid">{{col.mineCount}}</square-directive>
+          <div ng-repeat='col in row' class="square" >
+            <square-directive ng-class="{ 'flag': col.marked }"  ng-click="toggleSquare(col)" ng-right-click="toggleFlag(col)" square="col" grid="grid">{{col.mineCount}}</square-directive>
           </div>
         </div>
       </div>

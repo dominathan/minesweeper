@@ -7,8 +7,9 @@ angular
       var neighbors = squareNeighbors(square,$scope.grid);
       recursiveCheck(square,$scope.grid,neighbors)
     }
-    $scope.toggleFlag = function(square) {
-      console.log("FLAG")
+
+    $scope.toggleFlag = function(sq) {
+      sq.marked = !sq.marked;      
     }
 
     function recursiveCheck(square,grid) {
