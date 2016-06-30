@@ -24,7 +24,6 @@ angular
           event.preventDefault();
           if(scope.mine.mine) {
             $rootScope.$broadcast("game-over");
-            console.error("YOU LOSE");
           }
         });
       }

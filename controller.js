@@ -78,7 +78,6 @@ angular
         return !square.hidden;
       });
       if(shownSquares.length === ($scope.gameSettings.width * $scope.gameSettings.height) - $scope.gameSettings.mines) {
-        console.warn("WINNNNERR");
         $scope.winner = true;
       }
     }
