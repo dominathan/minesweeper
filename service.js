@@ -1,6 +1,6 @@
 angular
   .module("minesweeper")
-  .factory('MinesweeperService',function($rootScope) {
+  .factory('MinesweeperService',function() {
     return {
       initGrid: initGrid,
       checkMineCount: checkMineCount

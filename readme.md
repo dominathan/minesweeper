@@ -11,7 +11,7 @@ To start with default settings (99 mines, 20 rows, 40 columns), hit 'Start Game'
 Once you have clicked every square that is not a mine, you win!
 
 ### To do
-Add listener to see if game is over (call non-mines squares are clicked).
+Add listener to see if game is over (all non-mines squares are clicked).
 Add timer.
 Add number of mines counter.
 Fix CSS overflow-x issue
