@@ -7,9 +7,9 @@ angular
     }
 
     function initGrid(opts) {
-      var mines = opts.mines || 99;
-      var width = opts.width || 30;
-      var height = opts.height || 24;
+      var mines = +opts.mines || 99;
+      var width = +opts.width || 40;
+      var height = +opts.height || 20;
       var grid = [];
       var row;
       var listOfShuffledMines = shuffle(createSquares(mines,width,height));
@@ -25,7 +25,7 @@ angular
         grid.push(row);
       }
       return grid;
-    }
+    };
 
     function checkMineCount(square,grid) {
       if(square.mineCount > 0) {
@@ -42,8 +42,27 @@ angular
         }
       }
       return square.mineCount;
-    }
+    };
 
+    function Square(mine) {
+      this.hidden = true;
+      this.mineCount = null;
+      this.mine = mine;
+    };
+
+    function createSquares(minesWanted, width, height) {
+      var list = [];
+      for(var i = 0; i < minesWanted; i++) {
+        list.push(new Square(true));
+      }
+
+      for(var i = 0; i < width * height - minesWanted; i++) {
+        list.push(new Square(false));
+      }
+      return list;
+    };
+
+    // Borrowed, wanted to use lodash but this was easier.
     function shuffle(a) {
         var j, x, i;
         for (i = a.length; i; i -= 1) {
@@ -53,27 +72,6 @@ angular
             a[j] = x;
         }
         return a;
-    }
-
-    function Square(mine) {
-      this.hidden = true
-      this.mineCount = null;
-      this.mine = mine;
-    }
-
-    function createSquares(minesWanted, width, height) {
-      var list = [];
-      for(var i = 0; i < minesWanted; i++) {
-        list.push(new Square(true))
-      }
-
-      for(var i = 0; i < width * height - minesWanted; i++) {
-        list.push(new Square(false))
-      }
-      return list
-    }
-
-
-
+    };
 
   })

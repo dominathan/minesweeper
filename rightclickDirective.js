@@ -1,3 +1,7 @@
+/*
+ * Borrowed from google to enable rightclicks.
+ */
+
 angular
   .module('minesweeper')
   .directive('ngRightClick', function($parse) {
