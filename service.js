@@ -3,7 +3,7 @@ angular
   .factory('MinesweeperService',function() {
 
     var globalGrid;
-    var gameState;
+    var gameState
 
     var listeners = [];
     return {
@@ -31,6 +31,7 @@ angular
       var grid = [];
       var row;
       var listOfShuffledMines = shuffle(createSquares(mines,width,height));
+      gameState = "PRISTINE";
 
       for(var i = 0; i < height; i++) {
         row = [];
@@ -43,6 +44,9 @@ angular
         grid.push(row);
       }
       globalGrid = grid;
+      if(listeners.length) {
+        listeners[0](_.clone(globalGrid),gameState);
+      }
       return grid;
     };
 

@@ -1,4 +1,4 @@
-angular
+const angular = angular
   .module('minesweeper')
   .component('square', {
     bindings: {
@@ -6,14 +6,24 @@ angular
     },
 
     template: `
-      <span class='square' ng-click="$ctrl.toggleSquare($ctrl.square)">{{$ctrl.square.mine ? ' ' : $ctrl.square.mineCount}}</span>
+      <span class='square'
+            ng-class="{ 'flag': $ctrl.square.marked }"
+            ng-right-click="$ctrl.toggleFlag($ctrl.square)"
+            ng-click="$ctrl.toggleSquare($ctrl.square)">{{$ctrl.square.mine ? ' ' : $ctrl.square.mineCount}}
+      </span>
     `,
 
-    controller: function(MinesweeperService) {
-      $ctrl = this;
-      
-      $ctrl.toggleSquare = function(square) {
-        MinesweeperService.showSquare(square);
+    controller: function (MinesweeperService) {
+      const $ctrl = this
+
+      $ctrl.toggleSquare = function (square) {
+        MinesweeperService.showSquare(square)
+      }
+
+      $ctrl.toggleFlag = function (sq) {
+        if (sq.hidden) {
+          sq.marked = !sq.marked
+        }
       }
     }
   })

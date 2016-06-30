@@ -1,6 +1,6 @@
-angular
+const angular = angular
   .module('minesweeper')
-  .component('winner',{
+  .component('winner', {
     bindings: {
       state: '<'
     },
@@ -12,15 +12,7 @@ angular
       </div>
     `,
 
-    controller: function() {
-      $ctrl = this;
-      $ctrl.winner = false
+    controller: function () {
 
-      if($ctrl.state === "WINNER") {
-        $ctrl.winner = true;
-      }
-      $ctrl.newGame = function() {
-
-      }
     }
   })

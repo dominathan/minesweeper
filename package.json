@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node_modules/.bin/serve"
+    "start": "node_modules/.bin/serve",
+    "lint": "node_modules/.bin/standard 'components/**/*.js' "
   },
   "author": "",
   "license": "ISC",

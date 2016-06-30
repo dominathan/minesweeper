@@ -1,4 +1,4 @@
-angular
+const angular = angular
   .module('minesweeper')
   .component('row', {
     bindings: {
@@ -7,9 +7,5 @@ angular
 
     template: `
       <square ng-repeat='square in $ctrl.row' square="square" class="square"></square>
-    `,
-
-    controller: function() {
-      $ctrl = this;
-    }
+    `
   })

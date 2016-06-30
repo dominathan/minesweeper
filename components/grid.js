@@ -1,6 +1,6 @@
-angular
+const angular = angular
   .module('minesweeper')
-  .component('grid',{
+  .component('grid', {
     bindings: {
       grid: '<'
     },
@@ -11,7 +11,6 @@ angular
       </div>
     `,
 
-    controller: function() {
-      $ctrl = this;
+    controller: function () {
     }
   })

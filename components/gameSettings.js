@@ -1,6 +1,6 @@
-angular
+const angular = angular
   .module('minesweeper')
-  .component('gameSettings',{
+  .component('gameSettings', {
     bindings: {
       grid: '<'
     },
@@ -14,7 +14,7 @@ angular
       </form>
     `,
 
-    controller: function() {
-      
+    controller: function () {
+
     }
   })
