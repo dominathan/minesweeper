@@ -1,18 +1,27 @@
 angular
   .module("minesweeper")
   .factory('MinesweeperService',function() {
-    return {
-      initGrid: initGrid,
-      checkMineCount: checkMineCount,
-      showSquare: showSquare
-    }
 
     var globalGrid;
+    var gameState;
+
+    var listeners = [];
+    return {
+      initGrid: initGrid,
+      showSquare: showSquare,
+      updateGrid: function(fn) {
+        listeners.push(fn)
+      }
+    }
 
     function showSquare(square) {
+      if(square.mine) {
+        gameState = 'LOST';
+      }
       var neighbors = squareNeighbors(square,globalGrid);
       recursiveCheck(square,globalGrid,neighbors);
       isVictorious(globalGrid);
+      listeners[0](_.clone(globalGrid),gameState);
     }
 
     function initGrid(opts) {
@@ -108,8 +117,7 @@ angular
         return !square.hidden;
       });
       if(shownSquares.length === (globalGrid.width * globalGrid.height) - globalGrid.mines) {
-
-        console.log("WINNNNNNERR")
+        gameState = 'WINNER';
       }
     }
 

@@ -11,7 +11,7 @@ angular
 
     controller: function(MinesweeperService) {
       $ctrl = this;
-
+      
       $ctrl.toggleSquare = function(square) {
         MinesweeperService.showSquare(square);
       }
