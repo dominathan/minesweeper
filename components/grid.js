@@ -1,4 +1,4 @@
-const angular = angular
+angular
   .module('minesweeper')
   .component('grid', {
     bindings: {

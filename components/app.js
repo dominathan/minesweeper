@@ -1,5 +1,5 @@
 
-const angular = angular
+angular
   .module('minesweeper')
   .component('app', {
     bindings: {
