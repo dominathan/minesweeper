@@ -1,6 +1,9 @@
 .square {
-  display: inline-block;
-  text-align: center;
+  border: 1px solid red;
+  background-color: lightgrey;
+  width: 25px;
+  height: 25px;
+  float: left;
 }
 
 .hidden {
@@ -11,8 +14,8 @@
   background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Minesweeper_flag.svg/2000px-Minesweeper_flag.svg.png');
   background-size: cover;
   background-repeat: no-repeat;
-  height: 20px;
-  width: 20px;
+  height: 25px;
+  width: 25px;
   z-index: 100;
   position: relative;
 }
@@ -31,8 +34,12 @@ header h2 {
 }
 
 .grid {
-  overflow-x: scroll;
-  overflow-y: scroll;
   margin: 0 auto;
   text-align: center;
+}
+
+.move {
+  vertical-align: top;
+  display: block;
+  height: 25px;
 }

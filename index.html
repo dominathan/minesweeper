@@ -8,11 +8,11 @@
     <link rel="stylesheet" href="styles.css" media="screen" title="no title" charset="utf-8">
   </head>
   <body ng-app="minesweeper">
-    <header>
-      <h2>MineSweeper</h2>
-    </header>
 
-    <div class="container" ng-controller="MinesweeperCtrl">
+    <app title="Minesweeper"></app>
+
+
+    <!-- <div class="container" ng-controller="MinesweeperCtrl">
       <form class="form-group" ng-submit="startGame(userGrid)">
         <input class="form-control" type="text" name="name" value="" ng-model="userGrid.mines" placeholder="Number of mines (default: 99)">
         <input class="form-control" type="text" name="name" value="" ng-model="userGrid.width" placeholder="width (default: 40)">
@@ -38,14 +38,18 @@
         <h2>WINNER!! Play again?</h2>
         <button type="button" name="button" class="btn btn-lg btn-primary" ng-click="newGame()">Play Again</button>
       </div>
-    </div>
+    </div> -->
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.13.1/lodash.js" charset="utf-8"></script>
     <script src="node_modules/angular/angular.js" charset="utf-8"></script>
+
     <script src="app.js" charset="utf-8"></script>
-    <script src="controller.js" charset="utf-8"></script>
     <script src="service.js" charset="utf-8"></script>
-    <script src="squareDirective.js" charset="utf-8"></script>
-    <script src="rightclickDirective.js" charset="utf-8"></script>
+
+    <script src="components/app.js" charset="utf-8"></script>
+    <script src="components/nav.js" charset="utf-8"></script>
+    <script src="components/grid.js" charset="utf-8"></script>
+    <script src="components/row.js" charset="utf-8"></script>
+    <script src="components/square.js" charset="utf-8"></script>
   </body>
 </html>

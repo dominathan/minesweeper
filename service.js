@@ -3,7 +3,16 @@ angular
   .factory('MinesweeperService',function() {
     return {
       initGrid: initGrid,
-      checkMineCount: checkMineCount
+      checkMineCount: checkMineCount,
+      showSquare: showSquare
+    }
+
+    var globalGrid;
+
+    function showSquare(square) {
+      var neighbors = squareNeighbors(square,globalGrid);
+      recursiveCheck(square,globalGrid,neighbors);
+      isVictorious(globalGrid);
     }
 
     function initGrid(opts) {
@@ -24,6 +33,7 @@ angular
         }
         grid.push(row);
       }
+      globalGrid = grid;
       return grid;
     };
 
@@ -61,6 +71,47 @@ angular
       }
       return list;
     };
+
+    function recursiveCheck(square,grid) {
+      if(square.marked) return;
+      var count = checkMineCount(square,grid)
+      if(square.mineCount > 0) {
+        square.hidden = false;
+        return
+      }
+      if(square.mineCount === 0 && square.hidden === true) {
+        square.hidden = false;
+        var sqNeighbors = squareNeighbors(square,grid)
+        angular.forEach(sqNeighbors,function(newSquare) {
+          recursiveCheck(newSquare,grid)
+        })
+      }
+    }
+
+    function squareNeighbors(square,grid) {
+      var neighbors = [];
+      var columnLocation = square.col;
+      var rowLocation = square.row;
+      for(var i = columnLocation - 1; i <= columnLocation + 1; i++) {
+        for(var j = rowLocation - 1; j <= rowLocation + 1; j++) {
+          if(grid[j] && grid[j][i]) {
+            neighbors.push(grid[j][i]);
+          }
+        }
+      }
+      return neighbors;
+    }
+
+    function isVictorious(grid) {
+      var flatmappedSquares = _.flatten(grid);
+      var shownSquares = flatmappedSquares.filter(function(square) {
+        return !square.hidden;
+      });
+      if(shownSquares.length === (globalGrid.width * globalGrid.height) - globalGrid.mines) {
+
+        console.log("WINNNNNNERR")
+      }
+    }
 
     // Borrowed, wanted to use lodash but this was easier.
     function shuffle(a) {
