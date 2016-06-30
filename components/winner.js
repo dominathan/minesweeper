@@ -12,8 +12,5 @@ angular
     `,
 
     controller: function () {
-      var $ctrl = this;
-
-
     }
   })

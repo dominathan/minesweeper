@@ -15,12 +15,12 @@ angular
     `,
 
     controller: function (MinesweeperService) {
-      var $ctrl = this;
-      $ctrl.startGame = function(opts) {
-        if(opts) {
-          MinesweeperService.initGrid(opts);
+      var $ctrl = this
+      $ctrl.startGame = function (opts) {
+        if (opts) {
+          MinesweeperService.initGrid(opts)
         } else {
-          MinesweeperService.initGrid({});
+          MinesweeperService.initGrid({})
         }
       }
     }
