@@ -3,6 +3,9 @@ angular
   .factory('MinesweeperService', function () {
     var globalGrid
     var gameState
+    var width;
+    var height;
+    var mines;
 
     var listeners = []
     return {
@@ -24,9 +27,9 @@ angular
     }
 
     function initGrid (opts) {
-      var mines = +opts.mines || 99
-      var width = +opts.width || 40
-      var height = +opts.height || 20
+      mines = +opts.mines || 99
+      width = +opts.width || 40
+      height = +opts.height || 20
       var grid = []
       var row
       var listOfShuffledMines = shuffle(createSquares(mines, width, height))
@@ -119,7 +122,7 @@ angular
       var shownSquares = flatmappedSquares.filter(function (square) {
         return !square.hidden
       })
-      if (shownSquares.length === (globalGrid.width * globalGrid.height) - globalGrid.mines) {
+      if (shownSquares.length === (width * height) - mines) {
         gameState = 'WINNER'
       }
     }

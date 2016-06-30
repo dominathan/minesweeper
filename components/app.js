@@ -8,6 +8,7 @@ angular
     },
     template: `
       <nav title='$ctrl.title'></nav>
+      <game-settings></game-settings>
       <div class="container">
         <grid ng-hide="$ctrl.state ==='LOST'" grid="$ctrl.grid"></grid>
         <winner state="$ctrl.state"></winner>

@@ -34,6 +34,8 @@ header h2 {
 }
 
 .grid {
+  display: inline-block;
+  width: 69%
   margin: 0 auto;
   text-align: center;
 }
@@ -42,4 +44,8 @@ header h2 {
   vertical-align: top;
   display: block;
   height: 25px;
+}
+
+form {
+  float: left;
 }
