@@ -1,9 +1,9 @@
 module.exports = function () {
   var globalGrid
   var gameState
-  var width;
-  var height;
-  var mines;
+  var width
+  var height
+  var mines
 
   var listeners = []
   return {

@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "npm run watch & node_modules/.bin/serve",
+    "serve": "node_modules/.bin/serve",
     "watch": "node_modules/.bin/watchify app.js -o bundle.js",
     "lint": "node_modules/.bin/standard 'components/**/*.js' "
   },
@@ -19,6 +20,7 @@
     "browserify": "^13.0.1",
     "bubleify": "^0.5.0",
     "serve": "^1.4.0",
+    "standard": "^7.1.2",
     "tape": "^4.6.0",
     "watchify": "^3.7.0"
   }
