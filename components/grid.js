@@ -1,16 +1,14 @@
-angular
-  .module('minesweeper')
-  .component('grid', {
-    bindings: {
-      grid: '<'
-    },
+module.exports = {
+  bindings: {
+    grid: '<'
+  },
 
-    template: `
-      <div class='grid'>
-        <row ng-repeat='row in $ctrl.grid' row='row' class="move"></row>
-      </div>
-    `,
+  template: `
+    <div class='grid'>
+      <row ng-repeat='row in $ctrl.grid' row='row' class="move"></row>
+    </div>
+  `,
 
-    controller: function () {
-    }
-  })
+  controller: function () {
+  }
+}

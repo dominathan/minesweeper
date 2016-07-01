@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node_modules/.bin/serve",
+    "start": "npm run watch & node_modules/.bin/serve",
+    "watch": "node_modules/.bin/watchify app.js -o bundle.js",
     "lint": "node_modules/.bin/standard 'components/**/*.js' "
   },
   "author": "",
