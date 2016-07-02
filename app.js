@@ -1,5 +1,4 @@
 var angular = require('angular')
-var _ = require('lodash')
 
 var appStart = require('./components/app.js')
 var gameSettings = require('./components/game-settings.js')

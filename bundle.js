@@ -1,6 +1,5 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 var angular = require('angular')
-var _ = require('lodash')
 
 var appStart = require('./components/app.js')
 var gameSettings = require('./components/game-settings.js')
@@ -26,7 +25,7 @@ angular
   .component('square', square)
   .directive('ngRightClick', rightClick)
 
-},{"./components/app.js":2,"./components/game-settings.js":3,"./components/grid.js":4,"./components/loser.js":5,"./components/nav.js":6,"./components/row":7,"./components/square.js":8,"./components/winner.js":9,"./directives/right-click-directive":10,"./services/minesweeper.service.js":14,"angular":12,"lodash":13}],2:[function(require,module,exports){
+},{"./components/app.js":2,"./components/game-settings.js":3,"./components/grid.js":4,"./components/loser.js":5,"./components/nav.js":6,"./components/row":7,"./components/square.js":8,"./components/winner.js":9,"./directives/right-click-directive":10,"./services/minesweeper.service.js":14,"angular":12}],2:[function(require,module,exports){
 
 module.exports = {
   bindings: {
@@ -48095,7 +48094,7 @@ module.exports = angular;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{}],14:[function(require,module,exports){
-var _ = require('lodash');
+var _ = require('lodash')
 
 module.exports = function () {
 
