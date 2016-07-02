@@ -2,7 +2,7 @@
 
 
 ### To Play!
-`npm install && npm run start`
+`npm install && npm run serve`
 Navigate to [localhost:3000](localhost:3000) in your browser.
 
 ### Rules
@@ -11,7 +11,6 @@ To start with default settings (99 mines, 20 rows, 40 columns), hit 'Start Game'
 Once you have clicked every square that is not a mine, you win!
 
 ### To do
-Add listener to see if game is over (all non-mines squares are clicked).
 Add timer.
 Add number of mines counter.
 Fix CSS overflow-x issue

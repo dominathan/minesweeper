@@ -1,11 +1,11 @@
-module.exports = function () {
+module.exports = function (_) {
   var globalGrid
   var gameState
   var width
   var height
   var mines
-
   var listeners = []
+
   return {
     initGrid: initGrid,
     showSquare: showSquare,
@@ -30,19 +30,20 @@ module.exports = function () {
     height = +opts.height || 20
     var grid = []
     var row
-    var listOfShuffledMines = shuffle(createSquares(mines, width, height))
+    var listOfShuffledMines = _.shuffle(createSquares(mines, width, height))
     gameState = 'PRISTINE'
 
-    for (var i = 0; i < height; i++) {
+    _.times(height,function(i) {
       row = []
-      for (var j = 0; j < width; j++) {
+      _.times(width,function(j) {
         var square = listOfShuffledMines.shift()
         square.col = j
         square.row = i
         row.push(square)
-      }
+      })
       grid.push(row)
-    }
+    })
+
     globalGrid = grid
     if (listeners.length) {
       listeners[0](_.clone(globalGrid), gameState)
@@ -57,6 +58,7 @@ module.exports = function () {
     square.mineCount = 0
     var columnLocation = square.col
     var rowLocation = square.row
+
     for (var i = columnLocation - 1; i <= columnLocation + 1; i++) {
       for (var j = rowLocation - 1; j <= rowLocation + 1; j++) {
         if (grid[j] && grid[j][i] && grid[j][i].mine) {
@@ -64,6 +66,7 @@ module.exports = function () {
         }
       }
     }
+
     return square.mineCount
   }
 
@@ -71,6 +74,9 @@ module.exports = function () {
     this.hidden = true
     this.mineCount = null
     this.mine = mine
+    this.marked = false
+    this.col = null
+    this.row = null
   }
 
   function createSquares (minesWanted, width, height) {
@@ -123,17 +129,5 @@ module.exports = function () {
     if (shownSquares.length === (width * height) - mines) {
       gameState = 'WINNER'
     }
-  }
-
-  // Borrowed, wanted to use lodash but this was easier.
-  function shuffle (a) {
-    var j, x, i
-    for (i = a.length; i; i -= 1) {
-      j = Math.floor(Math.random() * i)
-      x = a[i - 1]
-      a[i - 1] = a[j]
-      a[j] = x
-    }
-    return a
   }
 }

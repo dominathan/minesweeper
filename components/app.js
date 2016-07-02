@@ -5,14 +5,13 @@ module.exports = {
     state: '<'
   },
   template: `
-    <nav title='$ctrl.title'></nav>
-    <game-settings></game-settings>
-    <div class="container">
-      <grid ng-hide="$ctrl.state ==='LOST'" grid="$ctrl.grid"></grid>
-      <winner state="$ctrl.state"></winner>
-      <loser state="$ctrl.state"></loser>
-    </div>
-  `,
+  <nav title='$ctrl.title'></nav>
+  <game-settings></game-settings>
+  <div class="container">
+    <grid ng-hide="$ctrl.state ==='LOST'" grid="$ctrl.grid"></grid>
+    <winner state="$ctrl.state"></winner>
+    <loser state="$ctrl.state"></loser>
+  </div>`,
   controller: ['MinesweeperService', '$scope', controller]
 }
 

@@ -1,6 +1,6 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-var angular = require('angular');
-var _ = require('lodash');
+var angular = require('angular')
+var _ = require('lodash')
 
 var appStart = require('./components/app.js')
 var gameSettings = require('./components/game-settings.js')
@@ -11,20 +11,20 @@ var nav = require('./components/nav.js')
 var row = require('./components/row')
 var square = require('./components/square.js')
 var MinesweeperService = require('./services/minesweeper.service.js')
-var rightClick = require('./directives/right-click-directive');
+var rightClick = require('./directives/right-click-directive')
 
 angular
-  .module('minesweeper',[])
-  .service('MinesweeperService',MinesweeperService)
-  .component('app',appStart)
-  .component('gameSettings',gameSettings)
-  .component('grid',grid)
-  .component('loser',loser)
-  .component('winner',winner)
-  .component('row',row)
-  .component('nav',nav)
-  .component('square',square)
-  .directive('ngRightClick',rightClick)
+  .module('minesweeper', [])
+  .service('MinesweeperService', MinesweeperService)
+  .component('app', appStart)
+  .component('gameSettings', gameSettings)
+  .component('grid', grid)
+  .component('loser', loser)
+  .component('winner', winner)
+  .component('row', row)
+  .component('nav', nav)
+  .component('square', square)
+  .directive('ngRightClick', rightClick)
 
 },{"./components/app.js":2,"./components/game-settings.js":3,"./components/grid.js":4,"./components/loser.js":5,"./components/nav.js":6,"./components/row":7,"./components/square.js":8,"./components/winner.js":9,"./directives/right-click-directive":10,"./services/minesweeper.service.js":14,"angular":12,"lodash":13}],2:[function(require,module,exports){
 
@@ -144,10 +144,7 @@ module.exports = {
 
   template: `
     <square ng-repeat='square in $ctrl.row' square="square" class="square"></square>
-  `,
-  controller: function () {
-    var $ctrl = this
-  }
+  `
 }
 
 },{}],8:[function(require,module,exports){
@@ -200,16 +197,16 @@ module.exports = {
  * Borrowed from google to enable rightclicks.
  */
 
-module.exports = function($parse) {
-  return function(scope, element, attrs) {
-    var fn = $parse(attrs.ngRightClick);
-    element.bind('contextmenu', function(event) {
-      scope.$apply(function() {
-        event.preventDefault();
-        fn(scope, {$event:event});
-      });
-    });
-  };
+module.exports = function ($parse) {
+  return function (scope, element, attrs) {
+    var fn = $parse(attrs.ngRightClick)
+    element.bind('contextmenu', function (event) {
+      scope.$apply(function () {
+        event.preventDefault()
+        fn(scope, {$event: event})
+      })
+    })
+  }
 }
 
 },{}],11:[function(require,module,exports){
@@ -48102,11 +48099,11 @@ module.exports = angular;
 module.exports = function () {
   var globalGrid
   var gameState
-  var width;
-  var height;
-  var mines;
-
+  var width
+  var height
+  var mines
   var listeners = []
+
   return {
     initGrid: initGrid,
     showSquare: showSquare,
@@ -48131,19 +48128,20 @@ module.exports = function () {
     height = +opts.height || 20
     var grid = []
     var row
-    var listOfShuffledMines = shuffle(createSquares(mines, width, height))
+    var listOfShuffledMines = _.shuffle(createSquares(mines, width, height))
     gameState = 'PRISTINE'
 
-    for (var i = 0; i < height; i++) {
+    _.times(height,function(i) {
       row = []
-      for (var j = 0; j < width; j++) {
+      _.times(width,function(j) {
         var square = listOfShuffledMines.shift()
         square.col = j
         square.row = i
         row.push(square)
-      }
+      })
       grid.push(row)
-    }
+    })
+
     globalGrid = grid
     if (listeners.length) {
       listeners[0](_.clone(globalGrid), gameState)
@@ -48158,6 +48156,7 @@ module.exports = function () {
     square.mineCount = 0
     var columnLocation = square.col
     var rowLocation = square.row
+
     for (var i = columnLocation - 1; i <= columnLocation + 1; i++) {
       for (var j = rowLocation - 1; j <= rowLocation + 1; j++) {
         if (grid[j] && grid[j][i] && grid[j][i].mine) {
@@ -48165,6 +48164,7 @@ module.exports = function () {
         }
       }
     }
+
     return square.mineCount
   }
 
@@ -48172,6 +48172,9 @@ module.exports = function () {
     this.hidden = true
     this.mineCount = null
     this.mine = mine
+    this.marked = false
+    this.col = null
+    this.row = null
   }
 
   function createSquares (minesWanted, width, height) {
@@ -48224,18 +48227,6 @@ module.exports = function () {
     if (shownSquares.length === (width * height) - mines) {
       gameState = 'WINNER'
     }
-  }
-
-  // Borrowed, wanted to use lodash but this was easier.
-  function shuffle (a) {
-    var j, x, i
-    for (i = a.length; i; i -= 1) {
-      j = Math.floor(Math.random() * i)
-      x = a[i - 1]
-      a[i - 1] = a[j]
-      a[j] = x
-    }
-    return a
   }
 }
 
