@@ -1,4 +1,7 @@
-module.exports = function (_) {
+var _ = require('lodash');
+
+module.exports = function () {
+
   var globalGrid
   var gameState
   var width
@@ -33,9 +36,9 @@ module.exports = function (_) {
     var listOfShuffledMines = _.shuffle(createSquares(mines, width, height))
     gameState = 'PRISTINE'
 
-    _.times(height,function(i) {
+    _.times(height, function (i) {
       row = []
-      _.times(width,function(j) {
+      _.times(width, function (j) {
         var square = listOfShuffledMines.shift()
         square.col = j
         square.row = i
@@ -101,7 +104,7 @@ module.exports = function (_) {
     if (square.mineCount === 0 && square.hidden === true) {
       square.hidden = false
       var sqNeighbors = squareNeighbors(square, grid)
-      angular.forEach(sqNeighbors, function (newSquare) {
+      sqNeighbors.forEach(function (newSquare) {
         recursiveCheck(newSquare, grid)
       })
     }

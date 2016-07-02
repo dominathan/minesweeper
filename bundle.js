@@ -34,14 +34,13 @@ module.exports = {
     state: '<'
   },
   template: `
-    <nav title='$ctrl.title'></nav>
-    <game-settings></game-settings>
-    <div class="container">
-      <grid ng-hide="$ctrl.state ==='LOST'" grid="$ctrl.grid"></grid>
-      <winner state="$ctrl.state"></winner>
-      <loser state="$ctrl.state"></loser>
-    </div>
-  `,
+  <nav title='$ctrl.title'></nav>
+  <game-settings></game-settings>
+  <div class="container">
+    <grid ng-hide="$ctrl.state ==='LOST'" grid="$ctrl.grid"></grid>
+    <winner state="$ctrl.state"></winner>
+    <loser state="$ctrl.state"></loser>
+  </div>`,
   controller: ['MinesweeperService', '$scope', controller]
 }
 
@@ -48096,7 +48095,10 @@ module.exports = angular;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{}],14:[function(require,module,exports){
+var _ = require('lodash');
+
 module.exports = function () {
+
   var globalGrid
   var gameState
   var width
@@ -48131,9 +48133,9 @@ module.exports = function () {
     var listOfShuffledMines = _.shuffle(createSquares(mines, width, height))
     gameState = 'PRISTINE'
 
-    _.times(height,function(i) {
+    _.times(height, function (i) {
       row = []
-      _.times(width,function(j) {
+      _.times(width, function (j) {
         var square = listOfShuffledMines.shift()
         square.col = j
         square.row = i
@@ -48199,7 +48201,7 @@ module.exports = function () {
     if (square.mineCount === 0 && square.hidden === true) {
       square.hidden = false
       var sqNeighbors = squareNeighbors(square, grid)
-      angular.forEach(sqNeighbors, function (newSquare) {
+      sqNeighbors.forEach(function (newSquare) {
         recursiveCheck(newSquare, grid)
       })
     }
@@ -48230,4 +48232,4 @@ module.exports = function () {
   }
 }
 
-},{}]},{},[1]);
+},{"lodash":13}]},{},[1]);
