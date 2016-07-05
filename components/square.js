@@ -8,8 +8,7 @@ module.exports = {
           ng-class="{ 'flag': $ctrl.square.marked }"
           ng-right-click="$ctrl.toggleFlag($ctrl.square)"
           ng-click="$ctrl.toggleSquare($ctrl.square)">{{$ctrl.square.mine ? ' ' : $ctrl.square.mineCount}}
-    </span>
-  `,
+    </span>`,
 
   controller: function (MinesweeperService) {
     const $ctrl = this

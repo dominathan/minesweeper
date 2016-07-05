@@ -4,6 +4,6 @@ module.exports = {
   },
 
   template: `
-    <square ng-repeat='square in $ctrl.row' square="square" class="square"></square>
+    <square ng-repeat='square in $ctrl.row' square='square' class='square'></square>
   `
 }

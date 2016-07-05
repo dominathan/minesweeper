@@ -17,6 +17,7 @@ module.exports = function () {
   }
 
   function showSquare (square) {
+    if (square.marked) return
     if (square.mine) {
       gameState = 'LOST'
     }

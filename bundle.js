@@ -89,8 +89,7 @@ module.exports = {
   template: `
     <div class='grid'>
       <row ng-repeat='row in $ctrl.grid' row='row' class="move"></row>
-    </div>
-  `,
+    </div>`,
 
   controller: function () {
   }
@@ -141,7 +140,7 @@ module.exports = {
   },
 
   template: `
-    <square ng-repeat='square in $ctrl.row' square="square" class="square"></square>
+    <square ng-repeat='square in $ctrl.row' square='square' class='square'></square>
   `
 }
 
@@ -156,8 +155,7 @@ module.exports = {
           ng-class="{ 'flag': $ctrl.square.marked }"
           ng-right-click="$ctrl.toggleFlag($ctrl.square)"
           ng-click="$ctrl.toggleSquare($ctrl.square)">{{$ctrl.square.mine ? ' ' : $ctrl.square.mineCount}}
-    </span>
-  `,
+    </span>`,
 
   controller: function (MinesweeperService) {
     const $ctrl = this
@@ -48097,7 +48095,6 @@ module.exports = angular;
 var _ = require('lodash')
 
 module.exports = function () {
-
   var globalGrid
   var gameState
   var width
@@ -48114,6 +48111,7 @@ module.exports = function () {
   }
 
   function showSquare (square) {
+    if (square.marked) return
     if (square.mine) {
       gameState = 'LOST'
     }
