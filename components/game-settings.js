@@ -9,17 +9,18 @@ module.exports = {
       <input class="form-control" type="text" name="name" value="" ng-model="userGrid.width" placeholder="width (default: 40)">
       <input class="form-control" type="text" name="name" value="" ng-model="userGrid.height" placeholder="height (default: 20)">
       <button type="submit" name="button" class="btn btn-lg btn-success">Start Game</button>
-    </form>
-  `,
+    </form>`,
 
-  controller: function (MinesweeperService) {
-    var $ctrl = this
-    $ctrl.startGame = function (opts) {
-      if (opts) {
-        MinesweeperService.initGrid(opts)
-      } else {
-        MinesweeperService.initGrid({})
-      }
+  controller: ['MinesweeperService', controller]
+}
+
+function controller(MinesweeperService) {
+  var $ctrl = this
+  $ctrl.startGame = function (opts) {
+    if (opts) {
+      $ctrl.grid = MinesweeperService.initGrid(opts)
+    } else {
+      $ctrl.grid = MinesweeperService.initGrid({})
     }
   }
 }

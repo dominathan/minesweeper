@@ -12,10 +12,10 @@ module.exports = {
     <winner state="$ctrl.state"></winner>
     <loser state="$ctrl.state"></loser>
   </div>`,
-  controller: ['MinesweeperService', '$scope', controller]
+  controller: ['MinesweeperService', controller]
 }
 
-function controller (MinesweeperService, $scope) {
+function controller (MinesweeperService) {
   var $ctrl = this
   $ctrl.grid = MinesweeperService.initGrid({})
 
