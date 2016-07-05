@@ -16,7 +16,7 @@ var userOptions = {
 }
 
 var fakeMss = {
-  initGrid: function(opts) {
+  initGrid: function (opts) {
     return [opts.height || 20, opts.width || 40, opts.mine || 30]
   }
 }
@@ -34,12 +34,11 @@ test('game-settings controller', function (t) {
 
   t.ok(ctrl.startGame, '$ctrl.startGame should work')
 
-
   ctrl.startGame()
   t.deepEquals(ctrl.grid, [20, 40, 30], 'should initialize a grid with default values if none are supplied by the user')
 
   ctrl.startGame(userOptions)
-  t.deepEquals(ctrl.grid, [9,10,3], 'should initialize a grid with user options')
+  t.deepEquals(ctrl.grid, [9, 10, 3], 'should initialize a grid with user options')
 
   t.end()
 })

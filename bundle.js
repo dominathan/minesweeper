@@ -70,7 +70,7 @@ module.exports = {
   controller: ['MinesweeperService', controller]
 }
 
-function controller(MinesweeperService) {
+function controller (MinesweeperService) {
   var $ctrl = this
   $ctrl.startGame = function (opts) {
     if (opts) {
