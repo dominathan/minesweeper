@@ -10,17 +10,19 @@ module.exports = {
           ng-click="$ctrl.toggleSquare($ctrl.square)">{{$ctrl.square.mine ? ' ' : $ctrl.square.mineCount}}
     </span>`,
 
-  controller: function (MinesweeperService) {
-    const $ctrl = this
+  controller: ['MinesweeperService', controller]
+}
 
-    $ctrl.toggleSquare = function (square) {
-      MinesweeperService.showSquare(square)
-    }
+function controller (MinesweeperService) {
+  const $ctrl = this
 
-    $ctrl.toggleFlag = function (sq) {
-      if (sq.hidden) {
-        sq.marked = !sq.marked
-      }
+  $ctrl.toggleSquare = function (square) {
+    MinesweeperService.showSquare(square)
+  }
+
+  $ctrl.toggleFlag = function (sq) {
+    if (sq.hidden) {
+      sq.marked = !sq.marked
     }
   }
 }

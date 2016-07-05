@@ -13,11 +13,17 @@ test('square template', function (t) {
   t.end()
 })
 
+var fakeMss = {
+  showSquare: function(square) {
+    return square.hidden = false
+  }
+}
+
 test('square controller', function (t) {
-  var c = controller
+  var c = controller[controller.length - 1]
   var ctrl = { }
 
-  c.apply(ctrl)
+  c.apply(ctrl, [fakeMss])
   t.ok(ctrl.toggleSquare, '$ctrl.toggleSquare should work')
   t.ok(ctrl.toggleFlag, '$ctrl.toggleFlag should work')
 
@@ -27,8 +33,9 @@ test('square controller', function (t) {
   }
 
   ctrl.toggleFlag(unmarkedSquare)
+  t.deepEquals(unmarkedSquare.marked, true, '$ctrl.toggleFlag makes the marked = true ')
 
-  t.deepEquals(unmarkedSquare.marked, true, '$ctrl.toggleSquare ')
-
+  ctrl.toggleSquare(unmarkedSquare)
+  t.deepEquals(unmarkedSquare.hidden, false, '$ctrl.toggleSquare make the square visible')
   t.end()
 })
