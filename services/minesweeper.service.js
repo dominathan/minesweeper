@@ -76,7 +76,7 @@ module.exports = function () {
 
   function Square (mine) {
     this.hidden = true
-    this.mineCount = null
+    this.mineCount = 0
     this.mine = mine
     this.marked = false
     this.col = null
@@ -151,40 +151,42 @@ module.exports = function () {
   function showSquare (square, grid) {
     grid = globalGrid || grid
 
-    if(square.mineCount > 0) {
-      return
+    if (square.marked || !square.hidden) return
+    //
+    // if(square.mine) {
+    //   return 'LOST'
+    // }
+
+
+    if(square && square.hidden && !square.mine) {
+      square.hidden = false
+      if(square.mineCount === 0) {
+        squareNeighbors(square)
+          .map(function (squareNeighbor) {
+            return validCell(squareNeighbor, grid)
+          })
+          .filter(function(element) {
+            return !!element
+          })
+          .map(function(validSquareNeighbor,idx,arr) {
+            console.log("ARR COUNT", arr)
+            if(validSquareNeighbor.mine) {
+              square.mineCount += 1 || 1
+            }
+            return validSquareNeighbor
+          })
+          .forEach(function (sq) {
+            if (sq.mineCount > 0) {
+              square.hidden = false
+              return
+            }
+            showSquare(sq,grid)
+          })
+      }
+      // listeners[0](_.clone(globalGrid), gameState)
     }
-    
-    if(square.marked || !square.hidden || square.mine) {
-      return
-    }
 
-    square.hidden = false
-    square.mineCount = 0
-
-    if(square.mine) {
-      return 'LOST'
-    }
-
-
-
-    return squareNeighbors(square)
-      .map(function (squareNeighbor) {
-        return validCell(squareNeighbor, grid)
-      })
-      .filter(function(element) {
-        return element
-      })
-      .map(function(validSquareNeighbor) {
-        if(validSquareNeighbor.mine) {
-          square.mineCount += 1 || 1
-        }
-        return validSquareNeighbor
-      })
-      .forEach(function (sq) {
-        showSquare(sq,grid)
-      })
-
+    return
   }
 
   function validCell (square, grid) {
