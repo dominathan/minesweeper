@@ -134,7 +134,6 @@ module.exports = function () {
         return goodSquare.mineCount === null && goodSquare.hidden === true
       })
       .map(function(testThisSquare) {
-        testThisSquare.mineCount = 0
         console.log("FILTERED NEIGHBORS", testThisSquare)
         testSquare(testThisSquare,grid)
       })
