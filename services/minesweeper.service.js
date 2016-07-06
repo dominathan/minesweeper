@@ -31,9 +31,9 @@ module.exports = function () {
   }
 
   function initGrid (opts) {
-    mines = +opts.mines || 99
-    width = +opts.width || 40
-    height = +opts.height || 20
+    mines = +opts.mines || 10
+    width = +opts.width || 10
+    height = +opts.height || 10
     var grid = []
     var row
     var listOfShuffledMines = _.shuffle(createSquares(mines, width, height))
@@ -115,6 +115,7 @@ module.exports = function () {
     }
 
     square.hidden = false
+    checkMineCount(square,grid)
 
     squareNeighbors(square,grid)
       .map(function(sq) {
@@ -125,7 +126,7 @@ module.exports = function () {
         return goodSquare.mineCount === 0 && goodSquare.hidden === true
       })
       .map(function(testThisSquare) {
-        console.log("FILTERED NEIGHBORS", testThisSquare)
+        // console.log("FILTERED NEIGHBORS", testThisSquare)
         testSquare(testThisSquare,grid)
       })
   }
