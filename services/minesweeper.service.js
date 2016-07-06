@@ -19,16 +19,16 @@ module.exports = function () {
     }
   }
 
-  // function showSquare (square) {
-  //   if (square.marked) return
-  //   if (square.mine) {
-  //     gameState = 'LOST'
-  //   }
-  //   var neighbors = squareNeighbors(square, globalGrid)
-  //   recursiveCheck(square, globalGrid, neighbors)
-  //   isVictorious(globalGrid)
-  //   listeners[0](_.clone(globalGrid), gameState)
-  // }
+  function showSquare (square) {
+    if (square.marked) return
+    if (square.mine) {
+      gameState = 'LOST'
+    }
+    var neighbors = squareNeighbors(square, globalGrid)
+    recursiveCheck(square, globalGrid, neighbors)
+    isVictorious(globalGrid)
+    listeners[0](_.clone(globalGrid), gameState)
+  }
 
   function initGrid (opts) {
     mines = +opts.mines || 99
@@ -103,29 +103,40 @@ module.exports = function () {
 
   function testSquare (square, grid) {
     grid = globalGrid || grid
-    if(square.marked) {
+    if (square.marked) {
       return
     }
 
-    if(square.mine) {
-      return "LOST"
-    }
-
-    if (square.mineCount > 0) {
-      square.hidden = false
+    if (square.mine) {
+      gameState = "LOST"
       return
     }
+
+    if (!square.hidden) {
+      return
+    }
+
+    if (square.mineCount) {
+      return
+    }
+
+    square.hidden = false
 
     squareNeighbors(square,grid)
-      .forEach(function(neighbor) {
-        square.mineCount = square.mineCount + 1 || 1
+      .map(function(neighbor) {
+        if(neighbor.mine) {
+          square.mineCount = square.mineCount + 1 || 1
+        }
+        return neighbor
       })
-      .filter(function(square) {
-        return square.mineCount === 0 && square.hidden === true
+      .filter(function(goodSquare) {
+        console.log("ALL NEIGHBORS", goodSquare)
+        return goodSquare.mineCount === null && goodSquare.hidden === true
       })
-      .map(function(square) {
-        square.hidden = false
-        testSquare(square,grid)
+      .map(function(testThisSquare) {
+        testThisSquare.mineCount = 0
+        console.log("FILTERED NEIGHBORS", testThisSquare)
+        testSquare(testThisSquare,grid)
       })
   }
 }
