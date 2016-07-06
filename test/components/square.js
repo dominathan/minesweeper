@@ -14,8 +14,9 @@ test('square template', function (t) {
 })
 
 var fakeMss = {
-  showSquare: function(square) {
-    return square.hidden = false
+  showSquare: function (square) {
+    square.hidden = false
+    return square
   }
 }
 

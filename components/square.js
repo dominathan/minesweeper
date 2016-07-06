@@ -17,7 +17,7 @@ function controller (MinesweeperService) {
   const $ctrl = this
 
   $ctrl.toggleSquare = function (square) {
-    MinesweeperService.showSquare(square)
+    MinesweeperService.showSquare(square, null, true)
   }
 
   $ctrl.toggleFlag = function (sq) {

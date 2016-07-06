@@ -61,9 +61,9 @@ module.exports = {
 
   template: `
     <form class="form-group" ng-submit="$ctrl.startGame(userGrid)">
-      <input class="form-control" type="text" name="name" value="" ng-model="userGrid.mines" placeholder="Number of mines (default: 99)">
-      <input class="form-control" type="text" name="name" value="" ng-model="userGrid.width" placeholder="width (default: 40)">
-      <input class="form-control" type="text" name="name" value="" ng-model="userGrid.height" placeholder="height (default: 20)">
+      <input class="form-control" type="text" name="name" value="" ng-model="userGrid.mines" placeholder="Number of mines (default: 10)">
+      <input class="form-control" type="text" name="name" value="" ng-model="userGrid.width" placeholder="width (default: 10)">
+      <input class="form-control" type="text" name="name" value="" ng-model="userGrid.height" placeholder="height (default: 10)">
       <button type="submit" name="button" class="btn btn-lg btn-success">Start Game</button>
     </form>`,
 
@@ -165,7 +165,7 @@ function controller (MinesweeperService) {
   const $ctrl = this
 
   $ctrl.toggleSquare = function (square) {
-    MinesweeperService.showSquare(square)
+    MinesweeperService.showSquare(square, null, true)
   }
 
   $ctrl.toggleFlag = function (sq) {
@@ -222,82 +222,53 @@ module.exports = function Square (mine) {
 var _ = require('lodash')
 var Square = require('./square')
 
-module.exports = function() {
-    return {
-      squareNeighbors: squareNeighbors,
-      createSquares: createSquares,
-      testSquare: testSquare,
-      validCell: validCell
-    }
+module.exports = function () {
+  return {
+    squareNeighbors: squareNeighbors,
+    createSquares: createSquares,
+    validCell: validCell
+  }
 
-    function squareNeighbors (square, grid) {
-      return [
-        { row: square.row - 1, col: square.col - 1 },
-        { row: square.row - 1, col: square.col },
-        { row: square.row - 1, col: square.col + 1 },
-        { row: square.row, col: square.col - 1 },
-        { row: square.row, col: square.col + 1 },
-        { row: square.row + 1, col: square.col - 1 },
-        { row: square.row + 1, col: square.col },
-        { row: square.row + 1, col: square.col + 1 }
-      ].map(function(element) {
-        return validCell(element, grid)
-      }).filter(function(element) {
-        return !!element
+  function squareNeighbors (square, grid) {
+    return [
+      { row: square.row - 1, col: square.col - 1 },
+      { row: square.row - 1, col: square.col },
+      { row: square.row - 1, col: square.col + 1 },
+      { row: square.row, col: square.col - 1 },
+      { row: square.row, col: square.col + 1 },
+      { row: square.row + 1, col: square.col - 1 },
+      { row: square.row + 1, col: square.col },
+      { row: square.row + 1, col: square.col + 1 }
+    ].map(function (element) {
+      return validCell(element, grid)
+    }).filter(function (element) {
+      return !!element
+    })
+  }
+
+  function createSquares (minesWanted, width, height) {
+    return _.flatten(
+      _.times(minesWanted, function (mineSquare) {
+        return [new Square(true)]
       })
+      .concat(_.times((width * height - minesWanted), function (element) {
+        return [new Square(false)]
+      }))
+    )
+  }
+
+  function validCell (square, grid) {
+    var x = square.col
+    var y = square.row
+    var col = grid[0].length
+    var row = grid.length
+
+    if (x >= 0 && y >= 0 && y < row && x < col) {
+      return grid[y][x]
     }
 
-    function createSquares (minesWanted, width, height) {
-      return _.flatten(
-        _.times(minesWanted,function(mineSquare) {
-          return [new Square(true)]
-        })
-        .concat(_.times((width * height - minesWanted),function(element) {
-            return [new Square(false)]
-          })
-        )
-      )
-    }
-
-    function validCell (square, grid) {
-      var x = square.col
-      var y = square.row
-      var col = grid[0].length
-      var row = grid.length
-
-      if(x >= 0 && y >= 0 && y < row && x < col) {
-        return grid[y][x]
-      }
-
-      return null
-    }
-
-    function testSquare (square, grid) {
-      if(square.marked) {
-        return
-      }
-
-      if(square.mine) {
-        return "LOST"
-      }
-
-      if (square.mineCount > 0) {
-        square.hidden = false
-        return
-      }
-
-      squareNeighbors(square,grid)
-        .forEach(function(neighbor) {
-          square.mineCount = square.mineCount + 1 || 1
-        })
-        .filter(function(square) {
-          return square.mineCount === 0 && square.hidden === true
-        })
-        .map(function(square) {
-          square.hidden = false
-          testSquare(square,grid)
-        })
-    }
+    return null
+  }
 }
 
 },{"./square":11,"lodash":15}],13:[function(require,module,exports){
@@ -48189,7 +48160,6 @@ module.exports = angular;
 },{}],16:[function(require,module,exports){
 var _ = require('lodash')
 
-var Square = require('../lib/square')
 var { createSquares, squareNeighbors } = require('../lib/utils')()
 
 module.exports = function () {
@@ -48202,21 +48172,10 @@ module.exports = function () {
 
   return {
     initGrid: initGrid,
-    showSquare: testSquare,
+    showSquare: showSquare,
     updateGrid: function (fn) {
       listeners.push(fn)
     }
-  }
-
-  function showSquare (square) {
-    if (square.marked) return
-    if (square.mine) {
-      gameState = 'LOST'
-    }
-    var neighbors = squareNeighbors(square, globalGrid)
-    recursiveCheck(square, globalGrid, neighbors)
-    isVictorious(globalGrid)
-    listeners[0](_.clone(globalGrid), gameState)
   }
 
   function initGrid (opts) {
@@ -48251,9 +48210,9 @@ module.exports = function () {
     }
     square.mineCount = 0
 
-    squareNeighbors(square,grid)
-      .map(function(neighbor) {
-        if(neighbor.mine) {
+    squareNeighbors(square, grid)
+      .map(function (neighbor) {
+        if (neighbor.mine) {
           square.mineCount += 1
         }
       })
@@ -48261,64 +48220,41 @@ module.exports = function () {
     return square
   }
 
-  function recursiveCheck (square, grid) {
-    if (square.marked) return
-    checkMineCount(square, grid)
-    if (square.mineCount > 0) {
-      square.hidden = false
-      return
-    }
-    if (square.mineCount === 0 && square.hidden === true) {
-      square.hidden = false
-      var sqNeighbors = squareNeighbors(square, grid)
-      sqNeighbors.forEach(function (newSquare) {
-        recursiveCheck(newSquare, grid)
-      })
-    }
-  }
-
-  function isVictorious (grid) {
-    var flatmappedSquares = _.flatten(grid)
-    var shownSquares = flatmappedSquares.filter(function (square) {
-      return !square.hidden
-    })
-    if (shownSquares.length === (width * height) - mines) {
-      gameState = 'WINNER'
-    }
-  }
-
-  function testSquare (square, grid) {
+  function showSquare (square, grid, firstClick) {
     grid = globalGrid || grid
-    if (square.marked || !square.hidden) {
-      return
-    }
-
-    if (square.mineCount > 0) {
-      square.hidden = false
+    if (firstClick && square.mine) {
+      gameState = 'LOST'
+      listeners[0](_.clone(globalGrid), gameState)
       return
     }
 
     if (square.mine) {
-      gameState = "LOST"
+      return
+    }
+
+    if (square.mineCount > 0) {
+      square.hidden = false
+      return
+    }
+
+    if (square.marked || !square.hidden) {
       return
     }
 
     square.hidden = false
-    checkMineCount(square,grid)
+    checkMineCount(square, grid)
 
-    squareNeighbors(square,grid)
-      .map(function(sq) {
-        return checkMineCount(sq,grid)
+    squareNeighbors(square, grid)
+      .map(function (sq) {
+        return checkMineCount(sq, grid)
       })
-      .filter(function(goodSquare) {
-        console.log("ALL NEIGHBORS", goodSquare)
+      .filter(function (goodSquare) {
         return goodSquare.mineCount === 0 && goodSquare.hidden === true
       })
-      .map(function(testThisSquare) {
-        // console.log("FILTERED NEIGHBORS", testThisSquare)
-        testSquare(testThisSquare,grid)
+      .map(function (testThisSquare) {
+        showSquare(testThisSquare, grid, false)
       })
   }
 }
 
-},{"../lib/square":11,"../lib/utils":12,"lodash":15}]},{},[1]);
+},{"../lib/utils":12,"lodash":15}]},{},[1]);

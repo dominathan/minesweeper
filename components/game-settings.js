@@ -5,9 +5,9 @@ module.exports = {
 
   template: `
     <form class="form-group" ng-submit="$ctrl.startGame(userGrid)">
-      <input class="form-control" type="text" name="name" value="" ng-model="userGrid.mines" placeholder="Number of mines (default: 99)">
-      <input class="form-control" type="text" name="name" value="" ng-model="userGrid.width" placeholder="width (default: 40)">
-      <input class="form-control" type="text" name="name" value="" ng-model="userGrid.height" placeholder="height (default: 20)">
+      <input class="form-control" type="text" name="name" value="" ng-model="userGrid.mines" placeholder="Number of mines (default: 10)">
+      <input class="form-control" type="text" name="name" value="" ng-model="userGrid.width" placeholder="width (default: 10)">
+      <input class="form-control" type="text" name="name" value="" ng-model="userGrid.height" placeholder="height (default: 10)">
       <button type="submit" name="button" class="btn btn-lg btn-success">Start Game</button>
     </form>`,
 

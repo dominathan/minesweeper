@@ -1,8 +1,7 @@
-var test = require('tape');
-var { Square } = require("../../lib/utils")
+var test = require('tape')
 var { createSquares, validCell, squareNeighbors } = require('../../lib/utils')()
 
-var mockGrid = [['a','b','c'],['d','e','f'],['g','h','i']]
+var mockGrid = [['a', 'b', 'c'], ['d', 'e', 'f'], ['g', 'h', 'i']]
 
 var validMockSquare = {
   col: 2,
@@ -19,12 +18,11 @@ var invalidMockSquare2 = {
   row: 5
 }
 
-
-test('should be able to create an array of squares', function(t) {
+test('should be able to create an array of squares', function (t) {
   t.ok(createSquares, 'should exist')
 
-  var arrayOfSquare = createSquares(2,3,4)
-  var mines = arrayOfSquare.filter(function(element) {
+  var arrayOfSquare = createSquares(2, 3, 4)
+  var mines = arrayOfSquare.filter(function (element) {
     return element.mine
   }).length
 
@@ -33,7 +31,7 @@ test('should be able to create an array of squares', function(t) {
   t.end()
 })
 
-test(' should be able to test whether a cell is valid (on the grid)', function(t) {
+test('should be able to test whether a cell is valid (on the grid)', function (t) {
   t.ok(validCell, 'should exist')
   t.equal(validCell(validMockSquare, mockGrid), 'i', 'should return the value at location')
   t.equal(validCell(invalidMockSquare, mockGrid), null, 'shuold return null for invalid squares with negative numbers')
@@ -42,11 +40,11 @@ test(' should be able to test whether a cell is valid (on the grid)', function(t
   t.end()
 })
 
-test('squareNeighbors', function(t) {
+test('squareNeighbors', function (t) {
   t.ok(squareNeighbors, 'should exist')
 
-  t.deepEquals(squareNeighbors(validMockSquare, mockGrid), ['e','f','h'])
-  t.deepEquals(squareNeighbors({col: 1, row: 1}, mockGrid), ['a','b','c','d','f','g','h','i'])
+  t.deepEquals(squareNeighbors(validMockSquare, mockGrid), ['e', 'f', 'h'])
+  t.deepEquals(squareNeighbors({col: 1, row: 1}, mockGrid), ['a', 'b', 'c', 'd', 'f', 'g', 'h', 'i'])
 
   t.end()
 })
