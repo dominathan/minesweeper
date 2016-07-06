@@ -18,16 +18,16 @@ module.exports = function () {
     }
   }
 
-  // function showSquare (square) {
-  //   if (square.marked) return
-  //   if (square.mine) {
-  //     gameState = 'LOST'
-  //   }
-  //   var neighbors = squareNeighbors(square, globalGrid)
-  //   recursiveCheck(square, globalGrid, neighbors)
-  //   isVictorious(globalGrid)
-  //   listeners[0](_.clone(globalGrid), gameState)
-  // }
+  function showSquare (square) {
+    if (square.marked) return
+    if (square.mine) {
+      gameState = 'LOST'
+    }
+    var neighbors = squareNeighbors(square, globalGrid)
+    recursiveCheck(square, globalGrid, neighbors)
+    isVictorious(globalGrid)
+    listeners[0](_.clone(globalGrid), gameState)
+  }
 
   function initGrid (opts) {
     mines = +opts.mines || 99
@@ -95,21 +95,21 @@ module.exports = function () {
     return list
   }
 
-  // function recursiveCheck (square, grid) {
-  //   if (square.marked) return
-  //   checkMineCount(square, grid)
-  //   if (square.mineCount > 0) {
-  //     square.hidden = false
-  //     return
-  //   }
-  //   if (square.mineCount === 0 && square.hidden === true) {
-  //     square.hidden = false
-  //     var sqNeighbors = squareNeighbors(square, grid)
-  //     sqNeighbors.forEach(function (newSquare) {
-  //       recursiveCheck(newSquare, grid)
-  //     })
-  //   }
-  // }
+  function recursiveCheck (square, grid) {
+    if (square.marked) return
+    checkMineCount(square, grid)
+    if (square.mineCount > 0) {
+      square.hidden = false
+      return
+    }
+    if (square.mineCount === 0 && square.hidden === true) {
+      square.hidden = false
+      var sqNeighbors = squareNeighbors(square, grid)
+      sqNeighbors.forEach(function (newSquare) {
+        recursiveCheck(newSquare, grid)
+      })
+    }
+  }
 
   // function squareNeighbors (square, grid) {
   //   var neighbors = []
@@ -135,59 +135,46 @@ module.exports = function () {
     }
   }
 
-  function squareNeighbors (square) {
-    return [
-      { y: square.row - 1, x: square.col - 1 },
-      { y: square.row - 1, x: square.col },
-      { y: square.row - 1, x: square.col + 1 },
-      { y: square.row, x: square.col - 1 },
-      { y: square.row, x: square.col + 1 },
-      { y: square.row + 1, x: square.col - 1 },
-      { y: square.row + 1, x: square.col },
-      { y: square.row + 1, x: square.col + 1 }
-    ]
-  }
-
-  function showSquare (square, grid) {
-    grid = globalGrid || grid
-
-    if (square.marked || !square.hidden) return
-    //
-    // if(square.mine) {
-    //   return 'LOST'
-    // }
-
-
-    if(square && square.hidden && !square.mine) {
-      square.hidden = false
-      if(square.mineCount === 0) {
-        squareNeighbors(square)
-          .map(function (squareNeighbor) {
-            return validCell(squareNeighbor, grid)
-          })
-          .filter(function(element) {
-            return !!element
-          })
-          .map(function(validSquareNeighbor,idx,arr) {
-            console.log("ARR COUNT", arr)
-            if(validSquareNeighbor.mine) {
-              square.mineCount += 1 || 1
-            }
-            return validSquareNeighbor
-          })
-          .forEach(function (sq) {
-            if (sq.mineCount > 0) {
-              square.hidden = false
-              return
-            }
-            showSquare(sq,grid)
-          })
-      }
-      // listeners[0](_.clone(globalGrid), gameState)
-    }
-
-    return
-  }
+  // function showSquare (square, grid) {
+  //   grid = globalGrid || grid
+  //
+  //   if (square.marked || !square.hidden) return
+  //   //
+  //   // if(square.mine) {
+  //   //   return 'LOST'
+  //   // }
+  //
+  //
+  //   if(square && square.hidden && !square.mine) {
+  //     square.hidden = false
+  //     if(square.mineCount === 0) {
+  //       squareNeighbors(square)
+  //         .map(function (squareNeighbor) {
+  //           return validCell(squareNeighbor, grid)
+  //         })
+  //         .filter(function(element) {
+  //           return !!element
+  //         })
+  //         .map(function(validSquareNeighbor,idx,arr) {
+  //           if(validSquareNeighbor.mine) {
+  //             square.mineCount += 1 || 1
+  //           }
+  //           return validSquareNeighbor
+  //         })
+  //         .forEach(function (sq) {
+  //           console.log("TEST", sq)
+  //           if (sq.mineCount > 0) {
+  //             return
+  //           } else {
+  //             showSquare(sq,grid)
+  //           }
+  //         })
+  //     }
+  //     listeners[0](_.clone(globalGrid), gameState)
+  //   }
+  //
+  //   return
+  // }
 
   function validCell (square, grid) {
     var x = square.x
