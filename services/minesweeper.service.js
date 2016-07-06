@@ -61,18 +61,15 @@ module.exports = function () {
       return square.mineCount
     }
     square.mineCount = 0
-    var columnLocation = square.col
-    var rowLocation = square.row
 
-    for (var i = columnLocation - 1; i <= columnLocation + 1; i++) {
-      for (var j = rowLocation - 1; j <= rowLocation + 1; j++) {
-        if (grid[j] && grid[j][i] && grid[j][i].mine) {
+    squareNeighbors(square,grid)
+      .map(function(neighbor) {
+        if(neighbor.mine) {
           square.mineCount += 1
         }
-      }
-    }
+      })
 
-    return square.mineCount
+    return square
   }
 
   function recursiveCheck (square, grid) {
@@ -103,7 +100,12 @@ module.exports = function () {
 
   function testSquare (square, grid) {
     grid = globalGrid || grid
-    if (square.marked) {
+    if (square.marked || !square.hidden) {
+      return
+    }
+
+    if (square.mineCount > 0) {
+      square.hidden = false
       return
     }
 
@@ -112,26 +114,15 @@ module.exports = function () {
       return
     }
 
-    if (!square.hidden) {
-      return
-    }
-
-    if (square.mineCount) {
-      return
-    }
-
     square.hidden = false
 
     squareNeighbors(square,grid)
-      .map(function(neighbor) {
-        if(neighbor.mine) {
-          square.mineCount = square.mineCount + 1 || 1
-        }
-        return neighbor
+      .map(function(sq) {
+        return checkMineCount(sq,grid)
       })
       .filter(function(goodSquare) {
         console.log("ALL NEIGHBORS", goodSquare)
-        return goodSquare.mineCount === null && goodSquare.hidden === true
+        return goodSquare.mineCount === 0 && goodSquare.hidden === true
       })
       .map(function(testThisSquare) {
         console.log("FILTERED NEIGHBORS", testThisSquare)
