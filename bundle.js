@@ -273,6 +273,7 @@ module.exports = function() {
     }
 
     function testSquare (square, grid) {
+      grid = globalGrid || grid
       if(square.marked) {
         return
       }
@@ -287,9 +288,8 @@ module.exports = function() {
       }
 
       squareNeighbors(square,grid)
-        .map(function(neighbor) {
+        .forEach(function(neighbor) {
           square.mineCount = square.mineCount + 1 || 1
-          return neighbor
         })
         .filter(function(square) {
           return square.mineCount === 0 && square.hidden === true
@@ -299,7 +299,6 @@ module.exports = function() {
           testSquare(square,grid)
         })
     }
-
 }
 
 },{"./square":11,"lodash":15}],13:[function(require,module,exports){
